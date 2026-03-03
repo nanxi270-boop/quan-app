@@ -1,0 +1,279 @@
+><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BT 黑金绿实验室</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #0A0A0A;
+            border: 1px solid #2C2C2E;
+            border-radius: 24px;
+            padding: 30px;
+        }
+        
+        /* 头部 - 金色只用一次 */
+        .header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #2C2C2E;
+            padding-bottom: 20px;
+        }
+        
+        h1 {
+            color: #FFD700;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #8E8E93;
+            font-size: 14px;
+        }
+        
+        /* KPI卡片 - 黑底金边，数据用绿 */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .kpi-card {
+            background: #1A1A1A;
+            border: 1px solid #2C2C2E;
+            border-radius: 16px;
+            padding: 20px;
+            transition: border 0.2s;
+        }
+        
+        .kpi-card:hover {
+            border-color: #FFD700;
+        }
+        
+        .kpi-label {
+            color: #8E8E93;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .kpi-value {
+            color: #00FFB9;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        /* 引擎状态 - 绿数据，灰文字 */
+        .engine-stats {
+            background: #1A1A1A;
+            border: 1px solid #2C2C2E;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #2C2C2E;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #8E8E93;
+        }
+        
+        .stat-value {
+            color: #00FFB9;
+            font-weight: 500;
+        }
+        
+        /* 实时成交 - 绿高亮 */
+        .ticker {
+            background: #1A1A1A;
+            border-left: 4px solid #00FFB9;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .ticker-title {
+            color: #8E8E93;
+            font-size: 12px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .ticker-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #8E8E93;
+        }
+        
+        .ticker-item span:last-child {
+            color: #00FFB9;
+        }
+        
+        /* 按钮 - 金色细边 */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            flex: 1;
+            background: transparent;
+            border: 1px solid #FFD700;
+            color: #FFD700;
+            padding: 14px 0;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: #FFD700;
+            color: #0A0A0A;
+        }
+        
+        /* 底部菜单 - 灰字，激活才金 */
+        .bottom-menu {display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #2C2C2E;
+        }
+        
+        .menu-item {
+            color: #8E8E93;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .menu-item.active {
+            color: #FFD700;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #5C5C5E;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 - 只用一次金色 -->
+        <div class="header">
+            <h1>⚡ BT 量化实验室</h1>
+            <div class="subtitle">QUANT LAB · EST. 2024</div>
+        </div>
+        
+        <!-- KPI卡片 - 绿数据，灰边框 -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">今日收益</div>
+                <div class="kpi-value">+4.87%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">总资产</div>
+                <div class="kpi-value">124.8K</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">跟单用户</div>
+                <div class="kpi-value">12.8K</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">策略胜率</div>
+                <div class="kpi-value">78.3%</div>
+            </div>
+        </div>
+        
+        <!-- 引擎状态 - 绿数据 -->
+        <div class="engine-stats">
+            <div class="stat-row">
+                <span class="stat-label">多空引擎</span>
+                <span class="stat-value">ACTIVE · 毫秒级</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">今日吞吐</span>
+                <span class="stat-value">$4.87M +23.4%</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">跟单用户</span>
+                <span class="stat-value">12,847 · 在线 3,284</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">策略胜率</span>
+                <span class="stat-value">78.3% · 夏普 3.92</span>
+            </div>
+        </div>
+        
+        <!-- 实时成交 - 绿高亮 -->
+        <div class="ticker">
+            <div class="ticker-title">实时成交</div>
+            <div class="ticker-item">
+                <span>用户 ***8</span>
+                <span>+1,247U</span>
+            </div>
+            <div class="ticker-item">
+                <span>用户 ***2</span>
+                <span>存入 5,000U</span>
+            </div>
+            <div class="ticker-item">
+                <span>用户 ***5</span>
+                <span>跟单 v4</span>
+            </div>
+        </div>
+        
+        <!-- 按钮 - 金色细边 -->
+        <div class="action-buttons">
+            <div class="btn">存入资本</div>
+            <div class="btn">提取收益</div>
+        </div>
+        
+        <!-- 底部菜单 -->
+        <div class="bottom-menu">
+            <span class="menu-item">交易</span>
+            <span class="menu-item active">量化</span>
+            <span class="menu-item">跟单</span>
+            <span class="menu-item">资产</span>
+        </div>
+        
+        <div class="footer">
+            BT 量化实验室 · 实时监控 · 24/7 运行
+        </div>
+    </div>
+</body>
+</html>
