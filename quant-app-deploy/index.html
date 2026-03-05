@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BT 黑金绿实验室 · 实时行情</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #0A0A0A;
+            border: 1px solid #2C2C2E;
+            border-radius: 24px;
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #FFD700;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #8E8E93;
+            font-size: 14px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #2C2C2E;
+            padding-bottom: 20px;
+        }
+        
+        .price-banner {
+            background: #1A1A1A;
+            border: 1px solid #FFD700;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price-info {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .price-label {
+            color: #8E8E93;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .price-value {
+            color: #00FFB9;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .price-change {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .positive {
+            color: #00FFB9;
+        }
+        
+        .negative {
+            color: #FF4D4D;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: #1A1A1A;
+            border: 1px solid #2C2C2E;
+            border-radius: 16px;
+            padding: 20px;
+        }
+        
+        .stat-label {
+            color: #8E8E93;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            color: #00FFB9;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .ticker {
+            background: #1A1A1A;
+            border-left: 4px solid #00FFB9;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .ticker-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: #8E8E93;
+            border-bottom: 1px solid #2C2C2E;
+        }
+        
+        .ticker-item:last-child {
+            border-bottom: none;
+        }
+        
+        .ticker-item span:last-child {
+            color: #00FFB9;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            flex: 1;
+            background: transparent;
+            border: 1px solid #FFD700;
+            color: #FFD700;
+            padding: 14px 0;
+            border-radius: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: #FFD700;
+            color: #0A0A0A;
+        }
+        
+        .bottom-menu {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #2C2C2E;
+        }
+        
+        .menu-item {
+            color: #8E8E93;
+            cursor: pointer;
+        }
+        
+        .menu-item.active {
+            color: #FFD700;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #5C5C5E;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        
+        .update-time {
+            text-align: right;
+            color: #5C5C5E;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ BT 黑金绿实验室</h1>
+        <div class="subtitle">REAL-TIME · QUANT LAB · EST. 2024</div>
+        
+        <!-- 实时价格 Banner (动态更新) -->
+        <div class="price-banner" id="btc-price">
+            <div class="price-info">
+                <div class="price-label">BTC/USDT</div>
+                <div class="price-value" id="btc-value">--</div>
+                <div class="price-change" id="btc-change">--</div>
+            </div>
+            <div class="price-info">
+                <div class="price-label">ETH/USDT</div>
+                <div class="price-value" id="eth-value">--</div>
+                <div class="price-change" id="eth-change">--</div>
+            </div>
+        </div>
+        
+        <!-- KPI 卡片 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">今日收益</div>
+                <div class="stat-value" id="daily-profit">+4.87%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">总资产</div>
+                <div class="stat-value" id="total-assets">124.8K</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">跟单用户</div>
+                <div class="stat-value" id="followers">12.8K</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">策略胜率</div>
+                <div class="stat-value" id="win-rate">78.3%</div>
+            </div>
+        </div>
+        
+        <!-- 实时成交 -->
+        <div class="ticker">
+            <div class="ticker-item">
+                <span>用户 ***8</span>
+                <span id="ticker1">+1,247U</span>
+            </div>
+            <div class="ticker-item">
+                <span>用户 ***2</span>
+                <span id="ticker2">存入 5,000U</span>
+            </div>
+            <div class="ticker-item">
+                <span>用户 ***5</span>
+                <span id="ticker3">跟单 v4</span>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div class="action-buttons">
+            <div class="btn">存入资本</div>
+            <div class="btn">提取收益</div>
+        </div>
+        
+        <!-- 底部菜单 -->
+        <div class="bottom-menu">
+            <span class="menu-item">交易</span>
+            <span class="menu-item active">量化</span>
+            <span class="menu-item">跟单</span>
+            <span class="menu-item">资产</span>
+        </div>
+        
+        <!-- 更新时间 -->
+        <div class="update-time" id="update-time">更新中...</div>
+        
+        <div class="footer">BT 黑金绿实验室 · 实时行情 · 24/7 运行</div>
+    </div>
+    <script>
+        // 获取实时行情 (使用币安公开 API)
+        async function fetchPrices() {
+            try {
+                // 获取 BTC 价格
+                const btcRes = await axios.get('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
+                const btcData = btcRes.data;
+                document.getElementById('btc-value').textContent = '$' + parseFloat(btcData.lastPrice).toFixed(2);
+                const btcChange = parseFloat(btcData.priceChangePercent).toFixed(2);
+                const btcChangeEl = document.getElementById('btc-change');
+                btcChangeEl.textContent = btcChange + '%';
+                btcChangeEl.className = 'price-change ' + (btcChange >= 0 ? 'positive' : 'negative');
+                
+                // 获取 ETH 价格
+                const ethRes = await axios.get('https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT');
+                const ethData = ethRes.data;
+                document.getElementById('eth-value').textContent = '$' + parseFloat(ethData.lastPrice).toFixed(2);
+                const ethChange = parseFloat(ethData.priceChangePercent).toFixed(2);
+                const ethChangeEl = document.getElementById('eth-change');
+                ethChangeEl.textContent = ethChange + '%';
+                ethChangeEl.className = 'price-change ' + (ethChange >= 0 ? 'positive' : 'negative');
+                
+                // 更新时间
+                document.getElementById('update-time').textContent = '最后更新: ' + new Date().toLocaleTimeString();
+                
+            } catch (error) {
+                console.error('获取行情失败', error);
+                document.getElementById('btc-value').textContent = '--';
+                document.getElementById('eth-value').textContent = '--';
+            }
+        }
+        
+        // 模拟实时成交滚动（可替换为真实数据）
+        function updateTicker() {
+            const tickers = [
+                ['+1,247U', '存入 5,000U', '跟单 v4'],
+                ['+832U', '存入 2,500U', '跟单 v3'],
+                ['+2,104U', '存入 10,000U', '跟单 v5'],
+                ['+563U', '存入 1,200U', '跟单 v2']
+            ];
+            let index = 0;
+            setInterval(() => {
+                const current = tickers[index % tickers.length];
+                document.getElementById('ticker1').textContent = current[0];
+                document.getElementById('ticker2').textContent = current[1];
+                document.getElementById('ticker3').textContent = current[2];
+                index++;
+            }, 5000);
+        }
+        
+        // 初始化
+        fetchPrices();
+        setInterval(fetchPrices, 10000); // 每10秒更新一次价格
+        updateTicker();
+    </script>
+</body>
+</html>

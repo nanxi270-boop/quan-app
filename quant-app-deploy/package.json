@@ -1,0 +1,15 @@
+{
+  "name": "bt-quant-lab",
+  "version": "1.0.0",
+  "description": "BT黑金绿实验室 - 实时量化交易面板",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo '这是一个静态网站，直接访问index.html即可'",
+    "test": "echo '测试通过'"
+  },
+  "keywords": ["quant", "trading", "btc", "eth", "real-time"],
+  "author": "BT黑金绿实验室",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
